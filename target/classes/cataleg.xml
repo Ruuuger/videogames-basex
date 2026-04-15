@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cataleg>
+    <joc id="v01" estat="disponible">
+        <titol>The Legend of Zelda: Breath of the Wild</titol>
+        <desenvolupador>Nintendo</desenvolupador>
+        <preu>59.99</preu>
+        <plataformes>
+            <plataforma>Nintendo Switch</plataforma>
+            <plataforma>Wii U</plataforma>
+        </plataformes>
+        <any_llancament>2017</any_llancament>
+    </joc>
+
+    <joc id="v02" estat="oferta">
+        <titol>The Witcher 3: Wild Hunt</titol>
+        <desenvolupador>CD Projekt Red</desenvolupador>
+        <preu>19.99</preu>
+        <plataformes>
+            <plataforma>PC</plataforma>
+            <plataforma>PlayStation 4</plataforma>
+            <plataforma>Xbox One</plataforma>
+        </plataformes>
+        <any_llancament>2015</any_llancament>
+    </joc>
+
+    <joc id="v03" estat="esgotat">
+        <titol>Hollow Knight</titol>
+        <desenvolupador>Team Cherry</desenvolupador>
+        <preu>14.99</preu>
+        <plataformes>
+            <plataforma>PC</plataforma>
+            <plataforma>Nintendo Switch</plataforma>
+            <plataforma>PlayStation 4</plataforma>
+            <plataforma>Xbox One</plataforma>
+        </plataformes>
+        <any_llancament>2017</any_llancament>
+    </joc>
+</cataleg>
