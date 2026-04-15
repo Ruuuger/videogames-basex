@@ -13,6 +13,15 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class BaseXVideojocDAOImpl implements VideojocDAO {
+    private static final int ID_INDEX = 0;
+    private static final int ESTAT_INDEX = 1;
+    private static final int TITOL_INDEX = 2;
+    private static final int DESENVOLUPADOR_INDEX = 3;
+    private static final int PREU_INDEX = 4;
+    private static final int PLATAFORMES_INDEX = 5;
+    private static final int ANY_LLANCAMENT_INDEX = 6;
+    private static final int MIN_FIELDS = 7;
+
     private final Context context;
 
     public BaseXVideojocDAOImpl(Context context) {
@@ -124,22 +133,22 @@ public class BaseXVideojocDAOImpl implements VideojocDAO {
 
     private Videojoc parseLine(String line) {
         String[] parts = line.split("\\|", -1);
-        if (parts.length < 7) {
-            throw new IllegalArgumentException("Resultat invàlid del catàleg: " + line);
+        if (parts.length < MIN_FIELDS) {
+            throw new IllegalArgumentException("Format de dades invàlid al catàleg.");
         }
-        List<String> plataformes = parts[5].isBlank() ? new ArrayList<>() : Arrays.stream(parts[5].split(","))
+        List<String> plataformes = parts[PLATAFORMES_INDEX].isBlank() ? new ArrayList<>() : Arrays.stream(parts[PLATAFORMES_INDEX].split(","))
                 .map(String::trim)
                 .filter(p -> !p.isEmpty())
                 .collect(Collectors.toList());
 
         return new Videojoc(
-                parts[0],
-                parts[1],
-                parts[2],
-                parts[3],
-                Double.parseDouble(parts[4]),
+                parts[ID_INDEX],
+                parts[ESTAT_INDEX],
+                parts[TITOL_INDEX],
+                parts[DESENVOLUPADOR_INDEX],
+                Double.parseDouble(parts[PREU_INDEX]),
                 plataformes,
-                Integer.parseInt(parts[6])
+                Integer.parseInt(parts[ANY_LLANCAMENT_INDEX])
         );
     }
 
