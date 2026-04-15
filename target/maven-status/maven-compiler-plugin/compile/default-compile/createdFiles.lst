@@ -1,5 +1,0 @@
-videogames/ui/MainApp.class
-videogames/dao/VideojocDAO.class
-videogames/dao/BaseXVideojocDAOImpl.class
-videogames/db/BaseXConnection.class
-videogames/model/Videojoc.class
