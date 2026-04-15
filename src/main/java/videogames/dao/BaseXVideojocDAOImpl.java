@@ -73,36 +73,52 @@ public class BaseXVideojocDAOImpl implements VideojocDAO {
 
     @Override
     public void afegirPlataforma(String id, String plataforma) throws Exception {
-        String xquery = "insert node <plataforma>" + escapeXml(plataforma) + "</plataforma> "
-                + "into doc(\"cataleg\")/cataleg/joc[@id=\"" + escapeXQueryLiteral(id) + "\"]/plataformes";
-        try (LocalSession session = new LocalSession(context)) {
-            session.execute(new XQuery(xquery));
+        String xquery = "declare variable $id as xs:string external; "
+                + "declare variable $plataforma as xs:string external; "
+                + "insert node <plataforma>{$plataforma}</plataforma> "
+                + "into doc(\"cataleg\")/cataleg/joc[@id=$id]/plataformes";
+        try (LocalSession session = new LocalSession(context);
+             LocalQuery query = session.query(xquery)) {
+            query.bind("id", id);
+            query.bind("plataforma", plataforma);
+            query.execute();
         }
     }
 
     @Override
     public void modificarPreu(String id, double nouPreu) throws Exception {
-        String xquery = "replace value of node doc(\"cataleg\")/cataleg/joc[@id=\"" + escapeXQueryLiteral(id)
-                + "\"]/preu with \"" + String.format(Locale.ROOT, "%.2f", nouPreu) + "\"";
-        try (LocalSession session = new LocalSession(context)) {
-            session.execute(new XQuery(xquery));
+        String xquery = "declare variable $id as xs:string external; "
+                + "declare variable $nouPreu as xs:double external; "
+                + "replace value of node doc(\"cataleg\")/cataleg/joc[@id=$id]/preu with $nouPreu";
+        try (LocalSession session = new LocalSession(context);
+             LocalQuery query = session.query(xquery)) {
+            query.bind("id", id);
+            query.bind("nouPreu", String.format(Locale.ROOT, "%.2f", nouPreu));
+            query.execute();
         }
     }
 
     @Override
     public void modificarEstat(String id, String nouEstat) throws Exception {
-        String xquery = "replace value of node doc(\"cataleg\")/cataleg/joc[@id=\"" + escapeXQueryLiteral(id)
-                + "\"]/@estat with \"" + escapeXQueryLiteral(nouEstat) + "\"";
-        try (LocalSession session = new LocalSession(context)) {
-            session.execute(new XQuery(xquery));
+        String xquery = "declare variable $id as xs:string external; "
+                + "declare variable $nouEstat as xs:string external; "
+                + "replace value of node doc(\"cataleg\")/cataleg/joc[@id=$id]/@estat with $nouEstat";
+        try (LocalSession session = new LocalSession(context);
+             LocalQuery query = session.query(xquery)) {
+            query.bind("id", id);
+            query.bind("nouEstat", nouEstat);
+            query.execute();
         }
     }
 
     @Override
     public void eliminarVideojoc(String id) throws Exception {
-        String xquery = "delete node doc(\"cataleg\")/cataleg/joc[@id=\"" + escapeXQueryLiteral(id) + "\"]";
-        try (LocalSession session = new LocalSession(context)) {
-            session.execute(new XQuery(xquery));
+        String xquery = "declare variable $id as xs:string external; "
+                + "delete node doc(\"cataleg\")/cataleg/joc[@id=$id]";
+        try (LocalSession session = new LocalSession(context);
+             LocalQuery query = session.query(xquery)) {
+            query.bind("id", id);
+            query.execute();
         }
     }
 
@@ -133,7 +149,4 @@ public class BaseXVideojocDAOImpl implements VideojocDAO {
                 .replace("'", "&apos;");
     }
 
-    private String escapeXQueryLiteral(String value) {
-        return value.replace("\\", "\\\\").replace("\"", "\\\"");
-    }
 }

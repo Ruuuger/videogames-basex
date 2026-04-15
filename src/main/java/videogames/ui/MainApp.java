@@ -112,14 +112,24 @@ public class MainApp {
         System.out.print("Desenvolupador: ");
         String desenvolupador = scanner.nextLine().trim();
         System.out.print("Preu: ");
-        double preu = Double.parseDouble(scanner.nextLine().trim());
+        double preu;
+        try {
+            preu = Double.parseDouble(scanner.nextLine().trim());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("El preu ha de ser un número vàlid.");
+        }
         System.out.print("Plataformes (separades per coma): ");
         List<String> plataformes = Arrays.stream(scanner.nextLine().split(","))
                 .map(String::trim)
                 .filter(p -> !p.isEmpty())
                 .collect(Collectors.toList());
         System.out.print("Any de llançament: ");
-        int anyLlancament = Integer.parseInt(scanner.nextLine().trim());
+        int anyLlancament;
+        try {
+            anyLlancament = Integer.parseInt(scanner.nextLine().trim());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("L'any de llançament ha de ser un enter vàlid.");
+        }
 
         dao.afegirVideojoc(new Videojoc(id, estat, titol, desenvolupador, preu, plataformes, anyLlancament));
         System.out.println("Videojoc afegit correctament.");
@@ -138,7 +148,12 @@ public class MainApp {
         System.out.print("ID del videojoc: ");
         String id = scanner.nextLine().trim();
         System.out.print("Nou preu: ");
-        double preu = Double.parseDouble(scanner.nextLine().trim());
+        double preu;
+        try {
+            preu = Double.parseDouble(scanner.nextLine().trim());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("El preu ha de ser un número vàlid.");
+        }
         dao.modificarPreu(id, preu);
         System.out.println("Preu modificat correctament.");
     }
