@@ -124,6 +124,9 @@ public class BaseXVideojocDAOImpl implements VideojocDAO {
 
     private Videojoc parseLine(String line) {
         String[] parts = line.split("\\|", -1);
+        if (parts.length < 7) {
+            throw new IllegalArgumentException("Resultat invàlid del catàleg: " + line);
+        }
         List<String> plataformes = parts[5].isBlank() ? new ArrayList<>() : Arrays.stream(parts[5].split(","))
                 .map(String::trim)
                 .filter(p -> !p.isEmpty())

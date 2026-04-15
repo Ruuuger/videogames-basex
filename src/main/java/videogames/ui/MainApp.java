@@ -96,7 +96,7 @@ public class MainApp {
         String id = scanner.nextLine().trim();
         Videojoc videojoc = dao.cercarPerId(id);
         if (videojoc == null) {
-            System.out.println("No trobat");
+            System.out.println("Videojoc no trobat.");
         } else {
             System.out.println(videojoc);
         }
