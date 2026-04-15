@@ -97,7 +97,7 @@ public class BaseXVideojocDAOImpl implements VideojocDAO {
     @Override
     public void modificarPreu(String id, double nouPreu) throws Exception {
         String xquery = "declare variable $id as xs:string external; "
-                + "declare variable $nouPreu as xs:double external; "
+                + "declare variable $nouPreu as xs:string external; "
                 + "replace value of node doc(\"cataleg\")/cataleg/joc[@id=$id]/preu with $nouPreu";
         try (LocalSession session = new LocalSession(context);
              LocalQuery query = session.query(xquery)) {
